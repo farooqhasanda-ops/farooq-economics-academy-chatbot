@@ -6,27 +6,14 @@ academy_info = {
     "experience": "20+ Years Teaching Experience",
     "subjects": "Economics, Civics, Commerce, Accounts",
     "classes": "Intermediate 1st Year and 2nd Year",
-    "timings": "Please contact the academy",
     "contact": "+91 9989221983",
     "email": "frkfarooqhasan@gmail.com",
     "location": "Tolichowki, Hyderabad",
-    "fees": "Please contact the academy for latest fee details"
+    "whatsapp": "https://wa.me/919989221983"
 }
 
 def chatbot(message, history):
     msg = message.lower().strip()
-
-    if any(word in msg for word in ["subject", "subjects", "course", "courses"]):
-        return f"📚 Subjects Offered:\n\n{academy_info['subjects']}"
-
-    if any(word in msg for word in ["contact", "phone", "mobile", "call"]):
-        return f"📞 Contact Number:\n{academy_info['contact']}\n\n📧 Email:\n{academy_info['email']}"
-
-    if any(word in msg for word in ["location", "address", "where"]):
-        return f"📍 Location:\n{academy_info['location']}"
-
-    if any(word in msg for word in ["experience", "years"]):
-        return f"👨‍🏫 {academy_info['experience']}"
 
     if any(word in msg for word in ["fee", "fees", "cost", "price"]):
         return """
@@ -38,14 +25,11 @@ Please share:
 • Class
 • Mobile Number
 
-Our academy team will guide you with the latest fee structure.
+Our team will guide you with the latest fee details.
 """
 
-    if any(word in msg for word in ["class", "classes", "intermediate", "1st year", "2nd year"]):
-        return f"🎓 Classes Available:\n\n{academy_info['classes']}"
-
-    if any(word in msg for word in ["admission", "join", "enroll", "admissions"]):
-        return f"""
+    if any(word in msg for word in ["admission", "join", "enroll", "register"]):
+        return """
 🎓 Admission Inquiry
 
 Please share:
@@ -53,18 +37,50 @@ Please share:
 1. Student Name
 2. Mobile Number
 3. Class (1st Year / 2nd Year)
-4. Online or Offline
+4. Online or Offline Preference
 
-📞 Contact: {academy_info['contact']}
+Our team will contact you shortly.
+"""
+
+    if any(word in msg for word in ["contact", "phone", "call", "mobile"]):
+        return f"""
+📞 Contact Information
+
+Phone: {academy_info['contact']}
+Email: {academy_info['email']}
 """
 
     if "whatsapp" in msg:
         return f"""
-📱 WhatsApp Support
+💬 WhatsApp Support
 
-Please contact:
+Contact us directly:
 
 {academy_info['contact']}
+
+WhatsApp Link:
+{academy_info['whatsapp']}
+"""
+
+    if any(word in msg for word in ["location", "address", "where"]):
+        return f"""
+📍 Academy Location
+
+{academy_info['location']}
+"""
+
+    if any(word in msg for word in ["subject", "subjects", "course", "courses"]):
+        return f"""
+📚 Subjects Offered
+
+{academy_info['subjects']}
+"""
+
+    if any(word in msg for word in ["experience", "years"]):
+        return f"""
+👨‍🏫 Teaching Experience
+
+{academy_info['experience']}
 """
 
     return """
@@ -84,7 +100,69 @@ I can help you with:
 How may I help you today?
 """
 
-demo = gr.ChatInterface(chatbot)
+def submit_form(name, phone, student_class, mode):
+    if not name or not phone or not student_class or not mode:
+        return "⚠️ Please fill all details."
+
+    return f"""
+✅ Admission Inquiry Submitted Successfully!
+
+Student Name: {name}
+Phone Number: {phone}
+Class: {student_class}
+Mode: {mode}
+
+Thank you for your interest in Farooq Economics Academy.
+
+📞 Contact: {academy_info['contact']}
+💬 WhatsApp: {academy_info['whatsapp']}
+"""
+
+with gr.Blocks(title="Farooq Economics Academy") as demo:
+
+    try:
+        gr.Image("logo.png", width=220, show_label=False)
+    except:
+        pass
+
+    gr.Markdown("""
+# 🎓 Farooq Economics Academy
+
+### Learn • Understand • Succeed
+
+📞 **Call Now:** +91 9989221983
+
+💬 **WhatsApp Now:** https://wa.me/919989221983
+
+---
+""")
+
+    gr.ChatInterface(chatbot)
+
+    gr.Markdown("## 📝 Admission Form")
+
+    name = gr.Textbox(label="Student Name")
+    phone = gr.Textbox(label="Phone Number")
+
+    student_class = gr.Dropdown(
+        ["Intermediate 1st Year", "Intermediate 2nd Year"],
+        label="Class"
+    )
+
+    mode = gr.Radio(
+        ["Online", "Offline"],
+        label="Mode"
+    )
+
+    submit_btn = gr.Button("Submit Admission Inquiry")
+
+    output = gr.Textbox(label="Status")
+
+    submit_btn.click(
+        submit_form,
+        inputs=[name, phone, student_class, mode],
+        outputs=output
+    )
 
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=7860)
