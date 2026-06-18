@@ -7,7 +7,7 @@ academy_info = {
     "subjects": "Economics, Civics, Commerce, Accounts",
     "classes": "Intermediate 1st Year and 2nd Year",
     "timings": "Please contact the academy",
-    "contact": "+91 9909221983",
+    "contact": "+91 9989221983",
     "email": "frkfarooqhasan@gmail.com",
     "location": "Tolichowki, Hyderabad",
     "fees": "Please contact the academy for latest fee details"
