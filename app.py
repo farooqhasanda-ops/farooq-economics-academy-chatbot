@@ -9,79 +9,30 @@ academy_info = {
     "contact": "+91 9989221983",
     "email": "frkfarooqhasan@gmail.com",
     "location": "Tolichowki, Hyderabad",
-    "whatsapp": "https://wa.me/919989221983"
+    "whatsapp": "https://wa.me/919989221983",
+    "call": "tel:+919989221983"
 }
 
 def chatbot(message, history):
     msg = message.lower().strip()
 
     if any(word in msg for word in ["fee", "fees", "cost", "price"]):
-        return """
-💰 Fee Information
-
-Please share:
-
-• Student Name
-• Class
-• Mobile Number
-
-Our team will guide you with the latest fee details.
-"""
+        return "💰 Please share Student Name, Class and Mobile Number. Our team will guide you with fee details."
 
     if any(word in msg for word in ["admission", "join", "enroll", "register"]):
-        return """
-🎓 Admission Inquiry
-
-Please share:
-
-1. Student Name
-2. Mobile Number
-3. Class (1st Year / 2nd Year)
-4. Online or Offline Preference
-
-Our team will contact you shortly.
-"""
+        return "🎓 Please share Name, Mobile Number, Class, and Online/Offline preference."
 
     if any(word in msg for word in ["contact", "phone", "call", "mobile"]):
-        return f"""
-📞 Contact Information
-
-Phone: {academy_info['contact']}
-Email: {academy_info['email']}
-"""
+        return f"📞 Call Now: {academy_info['contact']}\n\n💬 WhatsApp: {academy_info['whatsapp']}"
 
     if "whatsapp" in msg:
-        return f"""
-💬 WhatsApp Support
-
-Contact us directly:
-
-{academy_info['contact']}
-
-WhatsApp Link:
-{academy_info['whatsapp']}
-"""
+        return f"💬 WhatsApp Link:\n{academy_info['whatsapp']}"
 
     if any(word in msg for word in ["location", "address", "where"]):
-        return f"""
-📍 Academy Location
-
-{academy_info['location']}
-"""
+        return f"📍 Location: {academy_info['location']}"
 
     if any(word in msg for word in ["subject", "subjects", "course", "courses"]):
-        return f"""
-📚 Subjects Offered
-
-{academy_info['subjects']}
-"""
-
-    if any(word in msg for word in ["experience", "years"]):
-        return f"""
-👨‍🏫 Teaching Experience
-
-{academy_info['experience']}
-"""
+        return f"📚 Subjects Offered: {academy_info['subjects']}"
 
     return """
 Assalamu Alaikum! 👋
@@ -89,9 +40,7 @@ Assalamu Alaikum! 👋
 Welcome to Farooq Economics Academy.
 
 I can help you with:
-
 ✅ Admissions
-✅ Economics Tuition
 ✅ Fee Information
 ✅ Online Classes
 ✅ Offline Classes
@@ -112,9 +61,7 @@ Phone Number: {phone}
 Class: {student_class}
 Mode: {mode}
 
-Thank you for your interest in Farooq Economics Academy.
-
-📞 Contact: {academy_info['contact']}
+📞 Call: {academy_info['contact']}
 💬 WhatsApp: {academy_info['whatsapp']}
 """
 
@@ -125,14 +72,22 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
     except:
         pass
 
-    gr.Markdown("""
+    gr.Markdown(f"""
 # 🎓 Farooq Economics Academy
 
 ### Learn • Understand • Succeed
 
-📞 **Call Now:** +91 9989221983
+<a href="{academy_info['call']}" target="_blank">
+<button style="background-color:#28a745;color:white;padding:12px 22px;border:none;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;">
+📞 Call Now
+</button>
+</a>
 
-💬 **WhatsApp Now:** https://wa.me/919989221983
+<a href="{academy_info['whatsapp']}" target="_blank">
+<button style="background-color:#25D366;color:white;padding:12px 22px;border:none;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;">
+💬 WhatsApp Now
+</button>
+</a>
 
 ---
 """)
@@ -155,7 +110,6 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
     )
 
     submit_btn = gr.Button("Submit Admission Inquiry")
-
     output = gr.Textbox(label="Status")
 
     submit_btn.click(
