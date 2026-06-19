@@ -50,73 +50,33 @@ How may I help you today?
 """
 
 def submit_form(name, phone, student_class, mode):
+
     if not name or not phone or not student_class or not mode:
         return "⚠️ Please fill all details."
+
+    whatsapp_message = f"""
+Assalamu Alaikum Sir,
+
+🎓 New Admission Inquiry
+
+👤 Student Name: {name}
+📱 Phone: {phone}
+📚 Class: {student_class}
+💻 Mode: {mode}
+
+Please contact me regarding admission.
+"""
+
+    whatsapp_link = f"https://wa.me/919989221983?text={whatsapp_message.replace(' ', '%20').replace(chr(10), '%0A')}"
 
     return f"""
 ✅ Admission Inquiry Submitted Successfully!
 
-Student Name: {name}
-Phone Number: {phone}
-Class: {student_class}
-Mode: {mode}
+💬 Click the button below to send your details on WhatsApp:
 
-📞 Call: {academy_info['contact']}
-💬 WhatsApp: {academy_info['whatsapp']}
+<a href="{whatsapp_link}" target="_blank">
+<button style="background-color:#25D366;color:white;padding:12px 20px;border:none;border-radius:8px;font-size:18px;font-weight:bold;">
+💬 Send Admission Details on WhatsApp
+</button>
+</a>
 """
-
-with gr.Blocks(title="Farooq Economics Academy") as demo:
-
-    try:
-        gr.Image("logo.png", width=220, show_label=False)
-    except:
-        pass
-
-    gr.Markdown(f"""
-# 🎓 Farooq Economics Academy
-
-### Learn • Understand • Succeed
-
-<a href="{academy_info['call']}" target="_blank">
-<button style="background-color:#28a745;color:white;padding:12px 22px;border:none;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;">
-📞 Call Now
-</button>
-</a>
-
-<a href="{academy_info['whatsapp']}" target="_blank">
-<button style="background-color:#25D366;color:white;padding:12px 22px;border:none;border-radius:8px;font-size:18px;font-weight:bold;cursor:pointer;">
-💬 WhatsApp Now
-</button>
-</a>
-
----
-""")
-
-    gr.ChatInterface(chatbot)
-
-    gr.Markdown("## 📝 Admission Form")
-
-    name = gr.Textbox(label="Student Name")
-    phone = gr.Textbox(label="Phone Number")
-
-    student_class = gr.Dropdown(
-        ["Intermediate 1st Year", "Intermediate 2nd Year"],
-        label="Class"
-    )
-
-    mode = gr.Radio(
-        ["Online", "Offline"],
-        label="Mode"
-    )
-
-    submit_btn = gr.Button("Submit Admission Inquiry")
-    output = gr.Textbox(label="Status")
-
-    submit_btn.click(
-        submit_form,
-        inputs=[name, phone, student_class, mode],
-        outputs=output
-    )
-
-if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860)
