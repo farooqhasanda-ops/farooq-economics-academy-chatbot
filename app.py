@@ -10,7 +10,8 @@ academy_info = {
     "email": "frkfarooqhasan@gmail.com",
     "location": "Tolichowki, Hyderabad",
     "whatsapp": "https://wa.me/919989221983",
-    "admission_form": "https://docs.google.com/forms/d/e/1FAIpQLSeeXFxUPek9vKkjoVLLoGqNvbWPhm6EISnCN9vpGFpTcPtrow/viewform?usp=publish-editor"
+    "admission_form": "https://docs.google.com/forms/d/e/1FAIpQLSeeXFxUPek9vKkjoVLLoGqNvbWPhm6EISnCN9vpGFpTcPtrow/viewform?usp=publish-editor",
+    "maps": "https://www.google.com/maps/search/?api=1&query=Tolichowki+Hyderabad"
 }
 
 def chatbot(message, history):
@@ -28,8 +29,8 @@ def chatbot(message, history):
     if "whatsapp" in msg:
         return f"💬 WhatsApp Support:\n{academy_info['whatsapp']}"
 
-    if any(word in msg for word in ["location", "address", "where"]):
-        return f"📍 Location: {academy_info['location']}"
+    if any(word in msg for word in ["location", "address", "where", "map", "maps"]):
+        return f"📍 Location: {academy_info['location']}\n🗺️ Google Maps: {academy_info['maps']}"
 
     if any(word in msg for word in ["subject", "subjects", "course", "courses"]):
         return f"📚 Subjects Offered:\n{academy_info['subjects']}"
@@ -78,6 +79,20 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
 📝 Admission Form
 </button>
 </a>
+
+<a href="{academy_info['maps']}" target="_blank">
+<button style="background-color:#007bff;color:white;padding:12px 20px;border:none;border-radius:8px;font-size:18px;margin:5px;">
+📍 Google Maps
+</button>
+</a>
+
+---
+
+### 📍 Location
+Tolichowki, Hyderabad
+
+### 📞 Contact
++91 9989221983
 
 ---
 """)
