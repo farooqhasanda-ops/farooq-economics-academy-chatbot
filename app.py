@@ -12,7 +12,7 @@ EMAIL = "frkfarooqhasan@gmail.com"
 LOCATION = "Tolichowki, Hyderabad"
 TIMINGS = "5:00 PM to 11:00 PM"
 
-GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwVdrVxOYM4ltiiUXqhlWyzai_jLXqXIFWX04qwHS-xwhaYjoasIEk9jNBDWojHnXHDkQ/exec"
+GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxETmWa0y6Be3dqSDOeXb-pDdZm18IWPGGvi6ThhPqXk4_0naZHUpsAZrFWF2lCmq_Ghw/exec"
 
 # =========================
 # WHATSAPP LINK
