@@ -7,290 +7,66 @@ import requests
 # =========================
 ACADEMY_NAME = "Farooq Economics Academy"
 CONTACT_NUMBER = "9989221983"
-WHATSAPP_NUMBER = "919989221983"   # 91 + your mobile number without +
+WHATSAPP_NUMBER = "919989221983"
 EMAIL = "frkfarooqhasan@gmail.com"
 LOCATION = "Tolichowki, Hyderabad"
 TIMINGS = "5:00 PM to 11:00 PM"
 
-SUBJECTS = [
-    "Economics",
-    "Commerce",
-    "Civics",
-    "Accountancy"
-]
-
-CLASSES = [
-    "Intermediate 1st Year",
-    "Intermediate 2nd Year"
-]
+GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbwVdrVxOYM4ltiiUXqhlWyzai_jLXqXIFWX04qwHS-xwhaYjoasIEk9jNBDWojHnXHDkQ/exec"
 
 # =========================
-# HELPER: CREATE WHATSAPP LINK
+# WHATSAPP LINK
 # =========================
-def make_whatsapp_link(message: str):
+def make_whatsapp_link(message):
     return f"https://wa.me/{WHATSAPP_NUMBER}?text={quote(message)}"
 
 # =========================
-# SMART CHATBOT FUNCTION
+# SMART CHATBOT
 # =========================
 def chatbot(message, history):
-    user_msg = message.strip().lower()
+    user_msg = message.lower().strip()
 
-    greeting_keywords = ["hi", "hello", "assalamu", "assalamualaikum", "salam", "hey"]
-    fee_keywords = ["fee", "fees", "price", "charges", "cost"]
-    admission_keywords = ["admission", "join", "register", "enroll", "enrol", "seat"]
-    contact_keywords = ["contact", "phone", "number", "mobile", "call"]
-    whatsapp_keywords = ["whatsapp", "watsup", "wa"]
-    location_keywords = ["location", "address", "where", "academy location", "place"]
-    subject_keywords = ["subject", "subjects", "course", "courses", "what do you teach"]
-    class_keywords = ["1st year", "first year", "2nd year", "second year", "intermediate"]
-    online_keywords = ["online", "offline", "mode", "home tuition"]
-    timing_keywords = ["timing", "timings", "time", "class timing", "class timings"]
-    demo_keywords = ["demo", "trial", "sample class"]
-    teacher_keywords = ["who teaches", "sir", "faculty", "teacher"]
-
-    # 1) Greeting
-    if any(word in user_msg for word in greeting_keywords):
+    if any(word in user_msg for word in ["hi", "hello", "assalam", "salam", "hey"]):
         return f"""Assalamu Alaikum / Hello 👋
 
 Welcome to **{ACADEMY_NAME}** 🎓
 
-I’m here to help you with:
-- Admissions
-- Subjects offered
-- Online / Offline tuition
-- Fee enquiry
-- Contact details
-- Timings
+We provide tuition for Intermediate 1st Year and 2nd Year students.
 
-Please tell me how I can help you today."""
-
-    # 2) Admission
-    elif any(word in user_msg for word in admission_keywords):
-        return f"""📌 **Admissions are open at {ACADEMY_NAME}!**
-
-We provide tuition for:
-- **Intermediate 1st Year**
-- **Intermediate 2nd Year**
-
-📚 **Subjects Offered**
+Subjects:
 - Economics
 - Commerce
 - Civics
 - Accountancy
 
-🖥 **Modes Available**
-- Online Tuition
-- Offline Tuition
+You can ask me about admissions, fees, subjects, timings, online/offline tuition, or contact details."""
 
-To guide you properly, please share these details:
-1. Student Name  
-2. Class (1st Year / 2nd Year)  
-3. Subject  
-4. Mode (Online / Offline)  
-5. Area / Location  
-6. Phone Number  
-
-Or contact / WhatsApp directly on **{CONTACT_NUMBER}**."""
-
-    # 3) Fees
-    elif any(word in user_msg for word in fee_keywords):
-        return f"""💰 **Fee Details**
-
-Fees depend on:
-- Class
-- Subject
-- Mode (Online / Offline)
-
-For exact fee details, please share:
-1. Student class
-2. Subject needed
-3. Online or Offline
-
-📞 Contact / WhatsApp: **{CONTACT_NUMBER}**"""
-
-    # 4) Contact
-    elif any(word in user_msg for word in contact_keywords):
-        return f"""📞 **Contact Details**
-
-**{ACADEMY_NAME}**  
-Phone / WhatsApp: **{CONTACT_NUMBER}**  
-Email: **{EMAIL}**
-
-You may contact us for:
-- Admission enquiry
-- Fee details
-- Subject guidance
-- Online / Offline tuition"""
-
-    # 5) WhatsApp
-    elif any(word in user_msg for word in whatsapp_keywords):
-        wa_msg = "Assalamu Alaikum, I want details about admission in Farooq Economics Academy."
-        wa_link = make_whatsapp_link(wa_msg)
-        return f"""💬 **WhatsApp Enquiry**
-
-Please click the link below to chat directly on WhatsApp:
-
-👉 {wa_link}
-
-Or save this number and message us:
-**{CONTACT_NUMBER}**"""
-
-    # 6) Location
-    elif any(word in user_msg for word in location_keywords):
-        return f"""📍 **Academy Location**
-
-**{ACADEMY_NAME}**  
-Location: **{LOCATION}**
-
-For exact directions or admission help, please contact:
-📞 **{CONTACT_NUMBER}**"""
-
-    # 7) Subjects / Courses
-    elif any(word in user_msg for word in subject_keywords):
-        return f"""📚 **Subjects Offered at {ACADEMY_NAME}**
-
-We teach:
-- Economics
-- Commerce
-- Civics
-- Accountancy
-
-Available for:
-- **Intermediate 1st Year**
-- **Intermediate 2nd Year**
-
-If you want subject-wise guidance, tell me:
-- Your class
-- Your subject
-- Online or Offline preference"""
-
-    # 8) Classes
-    elif any(word in user_msg for word in class_keywords):
-        return f"""🎓 **Classes Available**
-
-We provide tuition for:
-- **Intermediate 1st Year**
-- **Intermediate 2nd Year**
-
-Subjects include:
-- Economics
-- Commerce
-- Civics
-- Accountancy
-
-Please tell me which class and subject you need help with."""
-
-    # 9) Online / Offline / Home tuition
-    elif any(word in user_msg for word in online_keywords):
-        return f"""🖥🏫 **Tuition Modes Available**
-
-At **{ACADEMY_NAME}**, we offer:
-- **Online Tuition**
-- **Offline Tuition**
-
-If needed, you can contact us to discuss the best option for your child / yourself.
-
-📞 Contact / WhatsApp: **{CONTACT_NUMBER}**"""
-
-    # 10) Timings
-    elif any(word in user_msg for word in timing_keywords):
-        return f"""⏰ **Academy Timings**
-
-Current class timings: **{TIMINGS}**
-
-For exact batch timing according to class and subject, please contact:
-📞 **{CONTACT_NUMBER}**"""
-
-    # 11) Demo class
-    elif any(word in user_msg for word in demo_keywords):
-        return f"""📘 **Demo / Guidance Class**
-
-For demo class or admission guidance, please contact directly on:
-📞 **{CONTACT_NUMBER}**
-
-Please mention:
-- Student Name
-- Class
-- Subject
-- Online / Offline preference"""
-
-    # 12) Teacher / faculty
-    elif any(word in user_msg for word in teacher_keywords):
-        return f"""👨‍🏫 **About the Academy**
-
-At **{ACADEMY_NAME}**, students are guided with personal attention, subject clarity and exam-focused teaching for Intermediate students.
-
-For admission or class details, please contact:
-📞 **{CONTACT_NUMBER}**"""
-
-    # 13) Fallback answer
-    else:
-        return f"""Thank you for your message. 😊
-
-I can help you with:
-- **Admission enquiry**
-- **Fee details**
-- **Subjects offered**
-- **Online / Offline tuition**
-- **Contact details**
-- **Academy location**
-- **Class timings**
-
-Please type one of these:
-- Admission
-- Fees
-- Subjects
-- Contact
-- Location
-- Online / Offline
-
-Or directly WhatsApp / call us on **{CONTACT_NUMBER}**."""
-
-# =========================
-# ADMISSION FORM SUBMIT FUNCTION
-# =========================
-def submit_form(name, phone, student_class, subject, mode):
-    if not name.strip() or not phone.strip():
-        return "❌ Please enter Student Name and Mobile Number."
-
-    msg = (
-        f"Assalamu Alaikum, I want admission details from Farooq Economics Academy.%0A"
-        f"Student Name: {name}%0A"
-        f"Mobile Number: {phone}%0A"
-        f"Class: {student_class}%0A"
-        f"Subject: {subject}%0A"
-        f"Mode: {mode}"
-    )
-
-    wa_link = f"https://wa.me/{WHATSAPP_NUMBER}?text={msg}"
-
-    return f"""✅ **Your enquiry is ready.**
-
-Please click the WhatsApp link below to send your admission enquiry:
-
-👉 {wa_link}
-"""
-
-# =========================
-# QUICK BUTTON ACTIONS
-# =========================
-def quick_admission():
-    return """Admissions are open for Intermediate 1st Year and 2nd Year students.
+    elif any(word in user_msg for word in ["admission", "join", "register", "enquiry", "enroll", "enrol"]):
+        return f"""📌 **Admissions are open!**
 
 Please share:
 1. Student Name
 2. Class
 3. Subject
-4. Online / Offline
-5. Phone Number"""
+4. Online or Offline
+5. Phone Number
 
-def quick_fees():
-    return f"""Fees depend on class, subject and mode.
-Please contact / WhatsApp on **{CONTACT_NUMBER}** for exact fee details."""
+Or WhatsApp directly: **{CONTACT_NUMBER}**"""
 
-def quick_subjects():
-    return """Subjects offered:
+    elif any(word in user_msg for word in ["fee", "fees", "price", "cost", "charges"]):
+        return f"""💰 **Fee Details**
+
+Fees depend on:
+- Class
+- Subject
+- Online / Offline mode
+
+For exact fee details, please contact / WhatsApp:
+**{CONTACT_NUMBER}**"""
+
+    elif any(word in user_msg for word in ["subject", "subjects", "course", "courses"]):
+        return """📚 **Subjects Offered**
+
 - Economics
 - Commerce
 - Civics
@@ -298,18 +74,115 @@ def quick_subjects():
 
 Available for Intermediate 1st Year and 2nd Year students."""
 
-def quick_contact():
-    return f"""Contact Farooq Economics Academy:
-📞 {CONTACT_NUMBER}
-📧 {EMAIL}
-📍 {LOCATION}"""
+    elif any(word in user_msg for word in ["online", "offline", "mode", "home tuition"]):
+        return """🖥️🏫 **Tuition Mode**
+
+Both **Online** and **Offline** tuition are available."""
+
+    elif any(word in user_msg for word in ["timing", "time", "batch"]):
+        return f"""⏰ **Timings**
+
+Current timing: **{TIMINGS}**
+
+For exact batch timing, please contact:
+**{CONTACT_NUMBER}**"""
+
+    elif any(word in user_msg for word in ["location", "address", "where"]):
+        return f"""📍 **Location**
+
+{ACADEMY_NAME}  
+{LOCATION}
+
+Contact: **{CONTACT_NUMBER}**"""
+
+    elif any(word in user_msg for word in ["contact", "phone", "mobile", "call", "number"]):
+        return f"""📞 **Contact Details**
+
+Phone / WhatsApp: **{CONTACT_NUMBER}**  
+Email: **{EMAIL}**  
+Location: **{LOCATION}**"""
+
+    elif any(word in user_msg for word in ["whatsapp", "watsup", "wa"]):
+        msg = "Assalamu Alaikum, I want admission details from Farooq Economics Academy."
+        return f"""💬 Click here to WhatsApp:
+
+👉 {make_whatsapp_link(msg)}"""
+
+    else:
+        return f"""Thank you for your message 😊
+
+I can help you with:
+- Admission
+- Fees
+- Subjects
+- Online / Offline tuition
+- Timings
+- Location
+- Contact details
+
+For quick help, WhatsApp: **{CONTACT_NUMBER}**"""
 
 # =========================
-# UI
+# SAVE ENQUIRY TO GOOGLE SHEET + WHATSAPP
+# =========================
+def submit_form(name, phone, student_class, subject, mode):
+    if not name or not phone:
+        return "❌ Please enter Student Name and Mobile Number."
+
+    data = {
+        "name": name,
+        "phone": phone,
+        "student_class": student_class,
+        "subject": subject,
+        "mode": mode
+    }
+
+    try:
+        response = requests.post(GOOGLE_SHEET_URL, json=data, timeout=10)
+        if response.status_code != 200:
+            return "❌ Enquiry could not be saved. Please try again."
+    except Exception:
+        return "❌ Internet/server error. Please try again."
+
+    whatsapp_message = (
+        f"Assalamu Alaikum, I want admission details from Farooq Economics Academy.\n"
+        f"Student Name: {name}\n"
+        f"Mobile Number: {phone}\n"
+        f"Class: {student_class}\n"
+        f"Subject: {subject}\n"
+        f"Mode: {mode}"
+    )
+
+    wa_link = make_whatsapp_link(whatsapp_message)
+
+    return f"""✅ **Your enquiry has been saved successfully in Google Sheet.**
+
+Now click below to send it on WhatsApp:
+
+👉 {wa_link}
+"""
+
+# =========================
+# QUICK BUTTONS
+# =========================
+def quick_admission():
+    return "Admissions are open for Intermediate 1st Year and 2nd Year students."
+
+def quick_fees():
+    return f"Fees depend on class, subject and mode. Contact: {CONTACT_NUMBER}"
+
+def quick_subjects():
+    return "Subjects: Economics, Commerce, Civics, Accountancy"
+
+def quick_contact():
+    return f"Contact / WhatsApp: {CONTACT_NUMBER}"
+
+# =========================
+# USER INTERFACE
 # =========================
 with gr.Blocks(title="Farooq Economics Academy") as demo:
-    gr.Markdown(
-        f"""
+
+    gr.Markdown(f"""
 # 🎓 {ACADEMY_NAME}
 
 ### Intermediate 1st Year & 2nd Year Tuition  
@@ -318,28 +191,24 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
 **Contact:** {CONTACT_NUMBER}
 
 ---
-"""
-    )
+""")
 
     with gr.Row():
-        gr.HTML(
-            f"""
-            <a href="tel:{CONTACT_NUMBER}" target="_blank">
-                <button style="padding:10px 20px; font-size:16px; cursor:pointer;">📞 Call Now</button>
-            </a>
-            """
-        )
+        gr.HTML(f"""
+        <a href="tel:{CONTACT_NUMBER}" target="_blank">
+        <button style="padding:10px 20px; font-size:16px;">📞 Call Now</button>
+        </a>
+        """)
 
-        gr.HTML(
-            f"""
-            <a href="https://wa.me/{WHATSAPP_NUMBER}" target="_blank">
-                <button style="padding:10px 20px; font-size:16px; cursor:pointer;">💬 WhatsApp Now</button>
-            </a>
-            """
-        )
+        gr.HTML(f"""
+        <a href="https://wa.me/{WHATSAPP_NUMBER}" target="_blank">
+        <button style="padding:10px 20px; font-size:16px;">💬 WhatsApp Now</button>
+        </a>
+        """)
 
     gr.Markdown("## 🤖 Chat with Academy Assistant")
-    chatbot_ui = gr.ChatInterface(
+
+    gr.ChatInterface(
         fn=chatbot,
         title="Farooq Economics Academy AI Assistant",
         description="Ask about admissions, fees, subjects, timings, online/offline tuition, and contact details."
@@ -369,16 +238,20 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
     with gr.Row():
         student_class = gr.Dropdown(
             choices=["Intermediate 1st Year", "Intermediate 2nd Year"],
-            label="Class"
+            label="Class",
+            value="Intermediate 1st Year"
         )
+
         subject = gr.Dropdown(
             choices=["Economics", "Commerce", "Civics", "Accountancy"],
-            label="Subject"
+            label="Subject",
+            value="Economics"
         )
 
     mode = gr.Radio(
         choices=["Online", "Offline"],
-        label="Mode of Tuition"
+        label="Mode of Tuition",
+        value="Offline"
     )
 
     submit_btn = gr.Button("Submit Enquiry")
@@ -390,17 +263,16 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
         outputs=form_output
     )
 
-    gr.Markdown(
-        f"""
+    gr.Markdown(f"""
 ---
 ### 📍 Academy Details
+
 **Academy Name:** {ACADEMY_NAME}  
 **Location:** {LOCATION}  
 **Timings:** {TIMINGS}  
 **Contact:** {CONTACT_NUMBER}  
 **Email:** {EMAIL}
-"""
-    )
+""")
 
 # =========================
 # RUN APP
