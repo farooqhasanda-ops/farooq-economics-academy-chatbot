@@ -9,7 +9,7 @@ EMAIL = "frkfarooqhasan@gmail.com"
 LOCATION = "Tolichowki, Hyderabad"
 TIMINGS = "5:00 PM to 11:00 PM"
 
-GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxETmWa0y6Be3dqSDOeXb-pDdZm18IWPGGvi6ThhPqXk4_0naZHUpsAZrFWF2lCmq_Ghw/exec"
+GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbw9k0DtyF4Rqg7Wcouu-yIrTe4luFYw77_SjnoQthrp-3Sm6mDKe1PsGtmoGJcDMqXl/exec"
 
 
 def make_whatsapp_link(message):
