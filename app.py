@@ -2,9 +2,6 @@ import gradio as gr
 from urllib.parse import quote
 import requests
 
-# =========================
-# ACADEMY DETAILS
-# =========================
 ACADEMY_NAME = "Farooq Economics Academy"
 CONTACT_NUMBER = "9989221983"
 WHATSAPP_NUMBER = "919989221983"
@@ -14,15 +11,11 @@ TIMINGS = "5:00 PM to 11:00 PM"
 
 GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbxETmWa0y6Be3dqSDOeXb-pDdZm18IWPGGvi6ThhPqXk4_0naZHUpsAZrFWF2lCmq_Ghw/exec"
 
-# =========================
-# WHATSAPP LINK
-# =========================
+
 def make_whatsapp_link(message):
     return f"https://wa.me/{WHATSAPP_NUMBER}?text={quote(message)}"
 
-# =========================
-# SMART CHATBOT
-# =========================
+
 def chatbot(message, history):
     user_msg = message.lower().strip()
 
@@ -44,22 +37,25 @@ You can ask me about admissions, fees, subjects, timings, online/offline tuition
     elif any(word in user_msg for word in ["admission", "join", "register", "enquiry", "enroll", "enrol"]):
         return f"""📌 **Admissions are open!**
 
-Please share:
-1. Student Name
-2. Class
-3. Subject
-4. Online or Offline
-5. Phone Number
+Please fill the admission enquiry form below.
+
+We will collect:
+- Student Name
+- Parent Name
+- Mobile Number
+- Class
+- Subject
+- Mode
+- Area / Location
+- Preferred Timing
+- Message
 
 Or WhatsApp directly: **{CONTACT_NUMBER}**"""
 
     elif any(word in user_msg for word in ["fee", "fees", "price", "cost", "charges"]):
         return f"""💰 **Fee Details**
 
-Fees depend on:
-- Class
-- Subject
-- Online / Offline mode
+Fees depend on class, subject and mode.
 
 For exact fee details, please contact / WhatsApp:
 **{CONTACT_NUMBER}**"""
@@ -102,12 +98,6 @@ Phone / WhatsApp: **{CONTACT_NUMBER}**
 Email: **{EMAIL}**  
 Location: **{LOCATION}**"""
 
-    elif any(word in user_msg for word in ["whatsapp", "watsup", "wa"]):
-        msg = "Assalamu Alaikum, I want admission details from Farooq Economics Academy."
-        return f"""💬 Click here to WhatsApp:
-
-👉 {make_whatsapp_link(msg)}"""
-
     else:
         return f"""Thank you for your message 😊
 
@@ -122,35 +112,41 @@ I can help you with:
 
 For quick help, WhatsApp: **{CONTACT_NUMBER}**"""
 
-# =========================
-# SAVE ENQUIRY TO GOOGLE SHEET + WHATSAPP
-# =========================
-def submit_form(name, phone, student_class, subject, mode):
+
+def submit_form(name, parent_name, phone, student_class, subject, mode, area, preferred_timing, message):
     if not name or not phone:
         return "❌ Please enter Student Name and Mobile Number."
 
     data = {
         "name": name,
+        "parent_name": parent_name,
         "phone": phone,
         "student_class": student_class,
         "subject": subject,
-        "mode": mode
+        "mode": mode,
+        "area": area,
+        "preferred_timing": preferred_timing,
+        "message": message
     }
 
     try:
         response = requests.post(GOOGLE_SHEET_URL, json=data, timeout=10)
-        if response.status_code != 200:
-            return "❌ Enquiry could not be saved. Please try again."
+        if response.status_code not in [200, 302]:
+            return f"❌ Enquiry could not be saved. Error code: {response.status_code}"
     except Exception:
         return "❌ Internet/server error. Please try again."
 
     whatsapp_message = (
         f"Assalamu Alaikum, I want admission details from Farooq Economics Academy.\n"
         f"Student Name: {name}\n"
+        f"Parent Name: {parent_name}\n"
         f"Mobile Number: {phone}\n"
         f"Class: {student_class}\n"
         f"Subject: {subject}\n"
-        f"Mode: {mode}"
+        f"Mode: {mode}\n"
+        f"Area / Location: {area}\n"
+        f"Preferred Timing: {preferred_timing}\n"
+        f"Message: {message}"
     )
 
     wa_link = make_whatsapp_link(whatsapp_message)
@@ -162,9 +158,7 @@ Now click below to send it on WhatsApp:
 👉 {wa_link}
 """
 
-# =========================
-# QUICK BUTTONS
-# =========================
+
 def quick_admission():
     return "Admissions are open for Intermediate 1st Year and 2nd Year students."
 
@@ -177,9 +171,7 @@ def quick_subjects():
 def quick_contact():
     return f"Contact / WhatsApp: {CONTACT_NUMBER}"
 
-# =========================
-# USER INTERFACE
-# =========================
+
 with gr.Blocks(title="Farooq Economics Academy") as demo:
 
     gr.Markdown(f"""
@@ -233,7 +225,11 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
 
     with gr.Row():
         name = gr.Textbox(label="Student Name")
+        parent_name = gr.Textbox(label="Parent Name")
+
+    with gr.Row():
         phone = gr.Textbox(label="Mobile Number")
+        area = gr.Textbox(label="Area / Location")
 
     with gr.Row():
         student_class = gr.Dropdown(
@@ -248,10 +244,29 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
             value="Economics"
         )
 
-    mode = gr.Radio(
-        choices=["Online", "Offline"],
-        label="Mode of Tuition",
-        value="Offline"
+    with gr.Row():
+        mode = gr.Radio(
+            choices=["Online", "Offline"],
+            label="Mode of Tuition",
+            value="Offline"
+        )
+
+        preferred_timing = gr.Dropdown(
+            choices=[
+                "Morning",
+                "Afternoon",
+                "Evening",
+                "Night",
+                "Flexible"
+            ],
+            label="Preferred Timing",
+            value="Evening"
+        )
+
+    message = gr.Textbox(
+        label="Message / Doubt",
+        placeholder="Example: I want Economics tuition for Intermediate 1st Year.",
+        lines=3
     )
 
     submit_btn = gr.Button("Submit Enquiry")
@@ -259,7 +274,7 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
 
     submit_btn.click(
         fn=submit_form,
-        inputs=[name, phone, student_class, subject, mode],
+        inputs=[name, parent_name, phone, student_class, subject, mode, area, preferred_timing, message],
         outputs=form_output
     )
 
@@ -274,8 +289,6 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
 **Email:** {EMAIL}
 """)
 
-# =========================
-# RUN APP
-# =========================
+
 if __name__ == "__main__":
     demo.launch(server_name="0.0.0.0", server_port=7860)
