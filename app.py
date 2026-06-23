@@ -1,5 +1,6 @@
 import gradio as gr
 from urllib.parse import quote
+import requests
 
 # =========================
 # ACADEMY DETAILS
