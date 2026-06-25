@@ -173,35 +173,26 @@ Now click below to send it on WhatsApp:
 
 custom_css = """
 .gradio-container {
-    background: linear-gradient(135deg, #000000 0%, #111111 45%, #c9a227 100%) !important;
+    background: linear-gradient(135deg, #000000 0%, #111111 55%, #c9a227 100%) !important;
     font-family: Arial, sans-serif;
 }
 
-/* Main white cards */
-.main-card {
-    background: #ffffff;
-    color: #111111;
-    border-radius: 18px;
-    padding: 28px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.28);
-    margin-bottom: 18px;
-}
-
-/* Hero section */
+/* Hero */
 .hero {
     text-align: center;
-    background: linear-gradient(135deg, #000000, #1a1a1a);
+    background: linear-gradient(135deg, #000000, #151515);
     color: #ffffff;
     padding: 35px;
     border-radius: 22px;
     border: 3px solid #c9a227;
     box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    margin-bottom: 25px;
 }
 
 .hero h1 {
     font-size: 42px;
     margin-bottom: 10px;
-    color: #c9a227;
+    color: #ffffff;
 }
 
 .hero p {
@@ -214,6 +205,29 @@ custom_css = """
     font-weight: bold;
 }
 
+/* Main white cards */
+.main-card {
+    background: #ffffff;
+    color: #111111 !important;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+    margin-bottom: 25px;
+}
+
+.main-card * {
+    color: #111111 !important;
+}
+
+/* Section title inside white cards */
+.section-title {
+    color: #111111 !important;
+    text-align: center;
+    font-size: 28px;
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+
 /* Grid layout */
 .card-grid {
     display: grid;
@@ -221,25 +235,26 @@ custom_css = """
     gap: 15px;
 }
 
-/* White info cards */
+/* Info cards */
 .info-card {
     background: #ffffff;
-    color: #111111;
+    color: #111111 !important;
     border-left: 6px solid #c9a227;
     border-radius: 14px;
     padding: 18px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    min-height: 95px;
 }
 
-.info-card h3 {
-    color: #111111;
-    margin-top: 0;
+.info-card h3,
+.info-card p {
+    color: #111111 !important;
 }
 
 /* Fee cards */
 .fee-card {
     background: #111111;
-    color: #ffffff;
+    color: #ffffff !important;
     border-radius: 14px;
     padding: 18px;
     text-align: center;
@@ -248,7 +263,11 @@ custom_css = """
 }
 
 .fee-card h3 {
-    color: #c9a227;
+    color: #c9a227 !important;
+}
+
+.fee-card p {
+    color: #ffffff !important;
 }
 
 /* CTA buttons */
@@ -259,7 +278,7 @@ custom_css = """
     border-radius: 30px;
     text-decoration: none;
     font-weight: bold;
-    color: #000000;
+    color: #000000 !important;
     background: #c9a227;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
@@ -268,37 +287,49 @@ custom_css = """
     background: #e0b93a;
 }
 
-/* Section titles */
-.section-title {
-    color: #111111;
-    text-align: center;
-    font-size: 28px;
-    margin-top: 10px;
-    margin-bottom: 16px;
-}
-
-/* Fix Gradio text visibility */
-.gr-markdown, .gr-markdown p, .gr-markdown h1, .gr-markdown h2, .gr-markdown h3,
-.gradio-container label, .gradio-container .prose, .gradio-container .prose * {
+/* Gradio headings outside cards */
+.gr-markdown h1,
+.gr-markdown h2,
+.gr-markdown h3,
+.gr-markdown p {
     color: #ffffff !important;
 }
 
-/* Input labels on dark background */
+/* Form labels */
 label {
     color: #ffffff !important;
     font-weight: 600;
 }
 
-/* Chatbox and form area */
-.gr-chatbot, .gr-box, .gr-form, .gr-group {
+/* Inputs visible */
+textarea,
+input,
+select {
+    color: #111111 !important;
+    background: #ffffff !important;
+}
+
+/* Chat/form containers */
+.gr-chatbot,
+.gr-box,
+.gr-form,
+.gr-group {
     background: #ffffff !important;
     color: #111111 !important;
     border-radius: 14px !important;
 }
 
-/* Input text */
-textarea, input, select {
+/* Keep text inside chatbot visible */
+.gr-chatbot *,
+.gr-box *,
+.gr-form *,
+.gr-group * {
     color: #111111 !important;
+}
+
+/* Submit button */
+button {
+    font-weight: bold !important;
 }
 """
 
