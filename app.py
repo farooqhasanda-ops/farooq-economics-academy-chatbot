@@ -173,63 +173,85 @@ Now click below to send it on WhatsApp:
 
 custom_css = """
 .gradio-container {
-    background: linear-gradient(135deg, #061a40 0%, #0b2e66 45%, #f5c542 100%) !important;
-    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #000000 0%, #111111 45%, #c9a227 100%) !important;
+    font-family: Arial, sans-serif;
 }
+
+/* Main white cards */
 .main-card {
-    background: white;
+    background: #ffffff;
+    color: #111111;
     border-radius: 18px;
     padding: 28px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.28);
     margin-bottom: 18px;
 }
+
+/* Hero section */
 .hero {
     text-align: center;
-    background: linear-gradient(135deg, #08204d, #0d47a1);
-    color: white;
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    color: #ffffff;
     padding: 35px;
     border-radius: 22px;
-    border: 3px solid #f5c542;
+    border: 3px solid #c9a227;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
+
 .hero h1 {
     font-size: 42px;
     margin-bottom: 10px;
-    color: #f5c542;
+    color: #c9a227;
 }
+
 .hero p {
     font-size: 18px;
+    color: #ffffff;
 }
+
 .gold {
-    color: #f5c542;
+    color: #c9a227;
     font-weight: bold;
 }
+
+/* Grid layout */
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 15px;
 }
+
+/* White info cards */
 .info-card {
     background: #ffffff;
-    border-left: 6px solid #f5c542;
+    color: #111111;
+    border-left: 6px solid #c9a227;
     border-radius: 14px;
     padding: 18px;
     box-shadow: 0 4px 14px rgba(0,0,0,0.12);
 }
+
 .info-card h3 {
-    color: #0b2e66;
+    color: #111111;
     margin-top: 0;
 }
+
+/* Fee cards */
 .fee-card {
-    background: #0b2e66;
-    color: white;
+    background: #111111;
+    color: #ffffff;
     border-radius: 14px;
     padding: 18px;
     text-align: center;
-    border: 2px solid #f5c542;
+    border: 2px solid #c9a227;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
+
 .fee-card h3 {
-    color: #f5c542;
+    color: #c9a227;
 }
+
+/* CTA buttons */
 .cta-button {
     display: inline-block;
     padding: 13px 24px;
@@ -237,14 +259,46 @@ custom_css = """
     border-radius: 30px;
     text-decoration: none;
     font-weight: bold;
-    color: #061a40;
-    background: #f5c542;
+    color: #000000;
+    background: #c9a227;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
+
+.cta-button:hover {
+    background: #e0b93a;
+}
+
+/* Section titles */
 .section-title {
-    color: #0b2e66;
+    color: #111111;
     text-align: center;
     font-size: 28px;
     margin-top: 10px;
+    margin-bottom: 16px;
+}
+
+/* Fix Gradio text visibility */
+.gr-markdown, .gr-markdown p, .gr-markdown h1, .gr-markdown h2, .gr-markdown h3,
+.gradio-container label, .gradio-container .prose, .gradio-container .prose * {
+    color: #ffffff !important;
+}
+
+/* Input labels on dark background */
+label {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+/* Chatbox and form area */
+.gr-chatbot, .gr-box, .gr-form, .gr-group {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border-radius: 14px !important;
+}
+
+/* Input text */
+textarea, input, select {
+    color: #111111 !important;
 }
 """
 
