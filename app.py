@@ -2,9 +2,6 @@ import gradio as gr
 from urllib.parse import quote
 import requests
 
-# =========================
-# ACADEMY DETAILS
-# =========================
 ACADEMY_NAME = "Farooq Economics Academy"
 CONTACT_NUMBER = "9989221983"
 WHATSAPP_NUMBER = "919989221983"
@@ -19,9 +16,6 @@ def make_whatsapp_link(message):
     return f"https://wa.me/{WHATSAPP_NUMBER}?text={quote(message)}"
 
 
-# =========================
-# SMART COUNSELLOR CHATBOT
-# =========================
 def chatbot(message, history):
     user_msg = message.lower().strip()
 
@@ -30,134 +24,83 @@ def chatbot(message, history):
 
 Welcome to **{ACADEMY_NAME}** 🎓
 
-I am here to guide students and parents for Intermediate 1st & 2nd Year tuition.
+We guide Intermediate 1st & 2nd Year students with personal attention and exam-focused teaching.
 
-📚 Subjects:
-- Civics
-- Economics
-- Commerce
-- Accountancy
+📚 Subjects: Civics, Economics, Commerce, Accountancy  
+🖥 Mode: Online, Offline & Home Tuition  
+✅ Demo Class Available  
 
-🖥 Modes:
-- Online tuition
-- Offline tuition
-- Home tuition available
+How can I help you today?"""
 
-You can ask about admission, fees, demo class, subjects, timings, or fill the enquiry form below."""
+    elif any(word in user_msg for word in ["fee", "fees", "price", "cost", "charges"]):
+        return """💰 **Fee Details**
+
+📘 1st Year: ₹6,000  
+📗 2nd Year: ₹8,000  
+📚 Per Subject: ₹6,000  
+🎁 All 3 Subjects: ₹10,000 only  
+
+For confirmation, please contact: **9989221983**"""
 
     elif any(word in user_msg for word in ["admission", "join", "register", "enquiry", "enroll", "enrol"]):
         return f"""📌 **Admissions are open!**
 
-At **{ACADEMY_NAME}**, we focus on concept clarity, regular guidance, and exam preparation.
-
 Please fill the enquiry form below or WhatsApp us directly.
+
+We will guide you according to your class, subject and timing.
 
 📞 Contact / WhatsApp: **{CONTACT_NUMBER}**"""
 
-    elif any(word in user_msg for word in ["fee", "fees", "price", "cost", "charges"]):
-        return f"""💰 **Fee Details**
+    elif any(word in user_msg for word in ["demo", "trial", "sample"]):
+        return f"""✅ **Demo Class Available**
 
-📘 Intermediate 1st Year: ₹6,000  
-📗 Intermediate 2nd Year: ₹8,000  
-📚 Per Subject: ₹6,000  
+Please share student name, class, subject and area.
 
-Special Discount:
-If a student takes all 3 subjects, total fee will be **₹10,000** instead of ₹12,000.
-
-Monthly option: ₹7,000
-
-For final confirmation and discount details, please contact:
+Or contact directly:
 📞 **{CONTACT_NUMBER}**"""
+
+    elif any(word in user_msg for word in ["why join", "why should", "benefit", "better", "special", "weak", "doubt"]):
+        return f"""🌟 **Why Choose {ACADEMY_NAME}?**
+
+✅ Personal attention  
+✅ Concept clarity  
+✅ Doubt clearing  
+✅ Exam-focused preparation  
+✅ Parent guidance  
+✅ Online, offline and home tuition  
+
+Our aim is to build confidence and improve academic performance.
+
+📞 Admission guidance: **{CONTACT_NUMBER}**"""
 
     elif any(word in user_msg for word in ["subject", "subjects", "course", "courses"]):
         return """📚 **Subjects Offered**
-
-We provide tuition for:
 
 - Civics
 - Economics
 - Commerce
 - Accountancy
 
-Available for Intermediate 1st Year and 2nd Year students."""
+Available for Intermediate 1st Year and 2nd Year."""
 
-    elif any(word in user_msg for word in ["online", "offline", "mode", "home tuition", "home"]):
-        return f"""🖥️🏫 **Tuition Modes Available**
+    elif any(word in user_msg for word in ["online", "offline", "home tuition", "home"]):
+        return f"""🖥️🏫 **Tuition Modes**
 
-We offer:
+We provide:
 - Online tuition
 - Offline tuition
 - Home tuition
 
-Please share your area/location so we can guide you properly.
+Please share your area for proper guidance.
 
-📞 Contact: **{CONTACT_NUMBER}**"""
-
-    elif any(word in user_msg for word in ["demo", "trial", "sample"]):
-        return f"""✅ **Demo Class Available**
-
-Yes, demo class is available.
-
-Please share:
-1. Student Name
-2. Class
-3. Subject
-4. Area
-5. Phone Number
-
-Or contact directly:
-📞 **{CONTACT_NUMBER}**"""
+📞 {CONTACT_NUMBER}"""
 
     elif any(word in user_msg for word in ["timing", "time", "batch"]):
         return f"""⏰ **Class Timings**
 
-Current batch timings:
-**{TIMINGS}**
+Current batch timings: **{TIMINGS}**
 
-For exact subject-wise timing, please contact:
-📞 **{CONTACT_NUMBER}**"""
-
-    elif any(word in user_msg for word in ["location", "address", "where"]):
-        return f"""📍 **Location**
-
-{ACADEMY_NAME}  
-{LOCATION}
-
-Online, Offline and Home Tuition are available.
-
-📞 Contact: **{CONTACT_NUMBER}**"""
-
-    elif any(word in user_msg for word in ["why join", "why should", "benefit", "better", "special"]):
-        return f"""🌟 **Why Choose {ACADEMY_NAME}?**
-
-Every student needs proper guidance, personal attention, and clear understanding of concepts.
-
-At **{ACADEMY_NAME}**, we focus on:
-✅ Concept clarity  
-✅ Exam-oriented preparation  
-✅ Personal attention  
-✅ Doubt clarification  
-✅ Regular guidance  
-✅ Online, offline and home tuition options  
-✅ Student-friendly teaching in English  
-
-Our aim is not only to complete the syllabus, but to build confidence in the student.
-
-📞 For admission guidance: **{CONTACT_NUMBER}**"""
-
-    elif any(word in user_msg for word in ["weak", "slow", "doubt", "not understanding", "poor"]):
-        return f"""Don’t worry 😊
-
-We give proper attention to students who are weak in basics or facing difficulty in understanding subjects.
-
-We focus on:
-✅ Basic concepts  
-✅ Step-by-step explanation  
-✅ Doubt clearing  
-✅ Exam preparation  
-✅ Confidence building  
-
-Please fill the enquiry form or contact:
+For exact subject timing, please contact:
 📞 **{CONTACT_NUMBER}**"""
 
     elif any(word in user_msg for word in ["contact", "phone", "mobile", "call", "number", "whatsapp"]):
@@ -168,29 +111,22 @@ Phone / WhatsApp: **{CONTACT_NUMBER}**
 Email: **{EMAIL}**  
 Location: **{LOCATION}**
 
-💬 WhatsApp directly:
 👉 {make_whatsapp_link(msg)}"""
 
     else:
-        return f"""Thank you for your message 😊
+        return f"""Thank you 😊
 
 I can help you with:
 - Admission
 - Fees
-- Subjects
 - Demo class
+- Subjects
 - Online / Offline / Home tuition
-- Timings
-- Location
 - Parent guidance
 
-For quick help, WhatsApp:
-📞 **{CONTACT_NUMBER}**"""
+📞 WhatsApp: **{CONTACT_NUMBER}**"""
 
 
-# =========================
-# SAVE FORM TO GOOGLE SHEET + WHATSAPP
-# =========================
 def submit_form(name, parent_name, phone, student_class, subject, mode, area, preferred_timing, message):
     if not name or not phone:
         return "❌ Please enter Student Name and Mobile Number."
@@ -227,83 +163,135 @@ def submit_form(name, parent_name, phone, student_class, subject, mode, area, pr
         f"Message: {message}"
     )
 
-    wa_link = make_whatsapp_link(whatsapp_message)
-
     return f"""✅ **Your enquiry has been saved successfully.**
 
 Now click below to send it on WhatsApp:
 
-👉 {wa_link}
+👉 {make_whatsapp_link(whatsapp_message)}
 """
 
 
-# =========================
-# QUICK BUTTONS
-# =========================
-def quick_admission():
-    return "Admissions are open for Intermediate 1st & 2nd Year students. Please fill the enquiry form below."
+custom_css = """
+.gradio-container {
+    background: linear-gradient(135deg, #061a40 0%, #0b2e66 45%, #f5c542 100%) !important;
+    font-family: 'Arial', sans-serif;
+}
+.main-card {
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    margin-bottom: 18px;
+}
+.hero {
+    text-align: center;
+    background: linear-gradient(135deg, #08204d, #0d47a1);
+    color: white;
+    padding: 35px;
+    border-radius: 22px;
+    border: 3px solid #f5c542;
+}
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    color: #f5c542;
+}
+.hero p {
+    font-size: 18px;
+}
+.gold {
+    color: #f5c542;
+    font-weight: bold;
+}
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+.info-card {
+    background: #ffffff;
+    border-left: 6px solid #f5c542;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+}
+.info-card h3 {
+    color: #0b2e66;
+    margin-top: 0;
+}
+.fee-card {
+    background: #0b2e66;
+    color: white;
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    border: 2px solid #f5c542;
+}
+.fee-card h3 {
+    color: #f5c542;
+}
+.cta-button {
+    display: inline-block;
+    padding: 13px 24px;
+    margin: 8px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #061a40;
+    background: #f5c542;
+}
+.section-title {
+    color: #0b2e66;
+    text-align: center;
+    font-size: 28px;
+    margin-top: 10px;
+}
+"""
 
-def quick_fees():
-    return "Fees: 1st Year ₹6,000 | 2nd Year ₹8,000 | Per Subject ₹6,000 | 3 Subjects ₹10,000 discount offer."
 
-def quick_subjects():
-    return "Subjects: Civics, Economics, Commerce, Accountancy."
+with gr.Blocks(title="Farooq Economics Academy", css=custom_css) as demo:
 
-def quick_contact():
-    return f"Contact / WhatsApp: {CONTACT_NUMBER}"
+    gr.HTML(f"""
+    <div class="hero">
+        <h1>🎓 {ACADEMY_NAME}</h1>
+        <p>Empowering Intermediate Students for Academic Success</p>
+        <p><span class="gold">Civics | Economics | Commerce | Accountancy</span></p>
+        <p>Online • Offline • Home Tuition Available</p>
+        <a class="cta-button" href="tel:{CONTACT_NUMBER}">📞 Call Now</a>
+        <a class="cta-button" href="https://wa.me/{WHATSAPP_NUMBER}" target="_blank">💬 WhatsApp Now</a>
+    </div>
+    """)
 
+    gr.HTML("""
+    <div class="main-card">
+        <h2 class="section-title">⭐ Why Choose Us?</h2>
+        <div class="card-grid">
+            <div class="info-card"><h3>📘 Concept Clarity</h3><p>Step-by-step explanation for better understanding.</p></div>
+            <div class="info-card"><h3>👨‍🏫 Personal Attention</h3><p>Support for weak and average students.</p></div>
+            <div class="info-card"><h3>📝 Exam Focused</h3><p>Preparation according to exam needs.</p></div>
+            <div class="info-card"><h3>✅ Demo Class</h3><p>Demo class available for students.</p></div>
+        </div>
+    </div>
+    """)
 
-# =========================
-# USER INTERFACE
-# =========================
-with gr.Blocks(title="Farooq Economics Academy") as demo:
-
-    gr.Markdown(f"""
-# 🎓 {ACADEMY_NAME}
-
-### Intermediate 1st Year & 2nd Year Tuition  
-**Subjects:** Civics | Economics | Commerce | Accountancy  
-**Mode:** Online | Offline | Home Tuition  
-**Contact:** {CONTACT_NUMBER}
-
----
-""")
-
-    with gr.Row():
-        gr.HTML(f"""
-        <a href="tel:{CONTACT_NUMBER}" target="_blank">
-        <button style="padding:10px 20px; font-size:16px;">📞 Call Now</button>
-        </a>
-        """)
-
-        gr.HTML(f"""
-        <a href="https://wa.me/{WHATSAPP_NUMBER}" target="_blank">
-        <button style="padding:10px 20px; font-size:16px;">💬 WhatsApp Now</button>
-        </a>
-        """)
+    gr.HTML("""
+    <div class="main-card">
+        <h2 class="section-title">💰 Fee Structure</h2>
+        <div class="card-grid">
+            <div class="fee-card"><h3>1st Year</h3><p>₹6,000</p></div>
+            <div class="fee-card"><h3>2nd Year</h3><p>₹8,000</p></div>
+            <div class="fee-card"><h3>Per Subject</h3><p>₹6,000</p></div>
+            <div class="fee-card"><h3>All 3 Subjects</h3><p>₹10,000<br>Save ₹2,000</p></div>
+        </div>
+    </div>
+    """)
 
     gr.Markdown("## 🤖 Smart Academy Counsellor")
-
     gr.ChatInterface(
         fn=chatbot,
         title="Farooq Economics Academy AI Assistant",
-        description="Ask about admissions, fees, demo class, subjects, home tuition, online/offline tuition, and parent guidance."
+        description="Ask about admissions, fees, demo class, subjects, home tuition, and parent guidance."
     )
-
-    gr.Markdown("## ⚡ Quick Information")
-
-    with gr.Row():
-        btn_admission = gr.Button("📝 Admission Info")
-        btn_fees = gr.Button("💰 Fee Info")
-        btn_subjects = gr.Button("📚 Subjects")
-        btn_contact = gr.Button("📞 Contact")
-
-    quick_output = gr.Markdown()
-
-    btn_admission.click(fn=quick_admission, outputs=quick_output)
-    btn_fees.click(fn=quick_fees, outputs=quick_output)
-    btn_subjects.click(fn=quick_subjects, outputs=quick_output)
-    btn_contact.click(fn=quick_contact, outputs=quick_output)
 
     gr.Markdown("## 📝 Admission Enquiry Form")
 
@@ -321,7 +309,6 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
             label="Class",
             value="Intermediate 1st Year"
         )
-
         subject = gr.Dropdown(
             choices=["Civics", "Economics", "Commerce", "Accountancy", "All Subjects"],
             label="Subject",
@@ -334,7 +321,6 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
             label="Mode of Tuition",
             value="Offline"
         )
-
         preferred_timing = gr.Dropdown(
             choices=["Morning", "Afternoon", "Evening", "Night", "Flexible"],
             label="Preferred Timing",
@@ -356,16 +342,16 @@ with gr.Blocks(title="Farooq Economics Academy") as demo:
         outputs=form_output
     )
 
-    gr.Markdown(f"""
----
-### 📍 Academy Details
-
-**Academy Name:** {ACADEMY_NAME}  
-**Location:** {LOCATION}  
-**Timings:** {TIMINGS}  
-**Contact:** {CONTACT_NUMBER}  
-**Email:** {EMAIL}
-""")
+    gr.HTML(f"""
+    <div class="main-card">
+        <h2 class="section-title">📍 Academy Details</h2>
+        <p><b>Academy:</b> {ACADEMY_NAME}</p>
+        <p><b>Location:</b> {LOCATION}</p>
+        <p><b>Timings:</b> {TIMINGS}</p>
+        <p><b>Contact:</b> {CONTACT_NUMBER}</p>
+        <p><b>Email:</b> {EMAIL}</p>
+    </div>
+    """)
 
 
 if __name__ == "__main__":
